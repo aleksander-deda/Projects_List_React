@@ -1,7 +1,10 @@
-import {useState} from 'react'
+import {useState, useContext} from 'react'
+import {ProjectContext} from '../store/projects-context.jsx'
 
-export default function NewTask({onAdd}){
+export default function NewTask(){
+    
     const [enteredTask, setEnteredTask] = useState('');
+    const {handleAddTask} = useContext(ProjectContext)
 
     function handleChange(event){
         setEnteredTask(event.target.value);
@@ -10,7 +13,7 @@ export default function NewTask({onAdd}){
         if (enteredTask.trim() === '') {
             return
         }
-        onAdd(enteredTask);
+        handleAddTask(enteredTask);
         setEnteredTask('');
         
     }

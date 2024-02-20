@@ -91,39 +91,34 @@ const [projectsState, setProjectsState] = useState({
   }
 
   const selectedProject = projectsState.projects.find(project => project.id ===projectsState.selectedProjectId);
-  let content = <SelectedProject 
-                    project={selectedProject}
-                    tasks={projectsState.tasks} 
-                    onDelete={handleDeleteProject} 
-                    onAddTask={handleAddTask}
-                    onDeleteTask={handleDeleteTask}/>;
+  let content = <SelectedProject/>;
 
   if (projectsState.selectedProjectId === null){
-    content = <NewProject onAdd={handleAddProject} onCancel={handleCancelAddProject}/>
+      content = <NewProject/>
   } else if(projectsState.selectedProjectId === undefined){
-    content = <NoProjectSelected onStartAddProject={handleStartAddProject} />
+      content = <NoProjectSelected/>
 
   }
 
-  const ctxValue = {
+  const contextValue = {
     selectedProjectId: projectsState.selectedProjectId,
+    selectedProject: selectedProject,
     projects: projectsState.projects,
     tasks: projectsState.tasks,
+    handleAddProject: handleAddProject,
     handleStartAddProject: handleStartAddProject,
     handleSelectProject: handleSelectProject,
+    handleCancelAddProject: handleCancelAddProject,
+    handleDeleteProject: handleDeleteProject,
+    handleAddTask: handleAddTask,
+    handleDeleteTask: handleDeleteTask
   };
 
   return (
-    <ProjectContext.Provider  value={ctxValue}>
+    <ProjectContext.Provider  value={contextValue}>
     <main className="h-screen my-8 flex gap-8">
-      <ProjectsSidebar 
-          onStartAddProject={handleStartAddProject}
-          projects={projectsState.projects}
-          onSelectProject={handleSelectProject}
-          selectedProjectId={projectsState.selectedProjectId}
-          />
-      
-      {content}
+        <ProjectsSidebar />
+          {content}
     </main>
     </ProjectContext.Provider>
   );

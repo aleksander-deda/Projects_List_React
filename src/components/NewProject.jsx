@@ -1,14 +1,19 @@
 import {useRef} from 'react';
 import Input from './Input.jsx';
 import Modal from './Modal.jsx';
+import { useContext} from 'react';
+import {ProjectContext} from '../store/projects-context.jsx'
 
-export default function NewProject({onAdd, onCancel}) {
+export default function NewProject() {
     const modal = useRef();
     const title = useRef();
     const description = useRef();
     const dueDate = useRef();
+
+    const {handleAddProject, handleCancelAddProject} = useContext(ProjectContext)
     
     function handleSave() {
+        console.log('fajeuafegregrgvfr')
         const enteredTitle = title.current.value;
         const enteredDescription = description.current.value;
         const enteredDueDate = dueDate.current.value;
@@ -20,8 +25,8 @@ export default function NewProject({onAdd, onCancel}) {
             modal.current.open();
             return;
             }
-
-        onAdd({
+            console.log('entering in adding...')
+            handleAddProject({
             title: enteredTitle,
             description: enteredDescription, 
             dueDate: enteredDueDate
@@ -38,7 +43,7 @@ export default function NewProject({onAdd, onCancel}) {
             <div className="w-[35rem] mt-16">
                 <menu className="flex items-center justify-end gap-4 my-4">
                     <li>
-                        <button onClick={onCancel} className="text-stone-800 hover:text-stone-950">Cancel</button>
+                        <button onClick={handleCancelAddProject} className="text-stone-800 hover:text-stone-950">Cancel</button>
                     </li>
                     <li>
                         <button onClick={handleSave} className="px-6 py-2 rounded-md bg-stone-800 text-stone-50 hover:bg-stone-950">Save</button>
